@@ -1,0 +1,50 @@
+{
+  "name": "omotenashicoin-lib",
+  "version": "1.0.2",
+  "description": "JavaScript OmotenashiCoin library.",
+  "author": "Nakkie <git@omotenashicoin.site>",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp --tasks && gulp test",
+    "test:ci": "npm run test",
+    "coverage": "gulp coverage",
+    "build": "gulp",
+    "submodule": "./node_modules/.bin/browserify  --require ./index.js:bitcore | uglifyjs > ./dist/bitcore.min.js | ./node_modules/.bin/browserify  --require ./index.js:bitcore >./dist/bitcore.js && cp ./dist/bitcore.js ."
+  },
+  "contributors": {
+    "name": "Naoaki Kanie",
+    "email": "z.kanie@gmail.com"
+    },
+  "keywords": [
+    "mtns",
+    "transaction",
+    "cryptocurrency",
+    "blockchain"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/omotenashicoin-project/OmotenashiCoin-lib.git"
+  },
+  "browser": {
+    "request": "browser-request"
+  },
+  "dependencies": {
+    "bn.js": "=4.11.8",
+    "bs58": "^4.0.1",
+    "buffer-compare": "=1.1.1",
+    "elliptic": "=6.4.0",
+    "inherits": "=2.0.1",
+    "lodash": "=4.17.15",
+    "scryptsy": "2.1.0",
+    "mtns-skein-hash-js": "^1.0.0",
+    "sha512": "=0.0.1"
+  },
+  "devDependencies": {
+    "bitcore-build": "^8.16.2",
+    "brfs": "^2.0.1",
+    "chai": "^4.2.0",
+    "gulp": "^4.0.0",
+    "sinon": "^7.1.1"
+  },
+  "license": "MIT"
+}
