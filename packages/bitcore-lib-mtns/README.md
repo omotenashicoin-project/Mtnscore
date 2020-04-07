@@ -2,14 +2,14 @@ Litecore Library
 =======
 
 [![NPM Package](https://img.shields.io/npm/v/litecore-lib.svg?style=flat-square)](https://www.npmjs.org/package/litecore-lib)
-[![Build Status](https://img.shields.io/travis/litecoin-project/litecore-lib.svg?branch=master&style=flat-square)](https://travis-ci.org/litecoin-project/litecore-lib)
-[![Coverage Status](https://img.shields.io/coveralls/litecoin-project/litecore-lib.svg?style=flat-square)](https://coveralls.io/r/litecoin-project/litecore-lib)
+[![Build Status](https://img.shields.io/travis/omotenashicoin-project/litecore-lib.svg?branch=master&style=flat-square)](https://travis-ci.org/omotenashicoin-project/litecore-lib)
+[![Coverage Status](https://img.shields.io/coveralls/omotenashicoin-project/litecore-lib.svg?style=flat-square)](https://coveralls.io/r/omotenashicoin-project/litecore-lib)
 
-A pure and powerful JavaScript Litecoin library.
+A pure and powerful JavaScript Omotenashicoin library.
 
 ## Principles
 
-Litecoin is a powerful new peer-to-peer platform for the next generation of financial technology. The decentralized nature of the Litecoin network allows for highly resilient litecoin infrastructure, and the developer community needs reliable, open-source tools to implement litecoin apps and services.
+Omotenashicoin is a powerful new peer-to-peer platform for the next generation of financial technology. The decentralized nature of the Omotenashicoin network allows for highly resilient omotenashicoin infrastructure, and the developer community needs reliable, open-source tools to implement omotenashicoin apps and services.
 
 ## Get Started
 
@@ -32,15 +32,15 @@ To get community assistance and ask for help with implementation questions, plea
 
 ## Examples
 
-* [Generate a random address](https://github.com/litecoin-project/litecore-lib/blob/master/docs/examples.md#generate-a-random-address)
-* [Generate a address from a SHA256 hash](https://github.com/litecoin-project/litecore-lib/blob/master/docs/examples.md#generate-a-address-from-a-sha256-hash)
-* [Import an address via WIF](https://github.com/litecoin-project/litecore-lib/blob/master/docs/examples.md#import-an-address-via-wif)
-* [Create a Transaction](https://github.com/litecoin-project/litecore-lib/blob/master/docs/examples.md#create-a-transaction)
-* [Sign a Bitcoin message](https://github.com/litecoin-project/litecore-lib/blob/master/docs/examples.md#sign-a-bitcoin-message)
-* [Verify a Bitcoin message](https://github.com/litecoin-project/litecore-lib/blob/master/docs/examples.md#verify-a-bitcoin-message)
-* [Create an OP RETURN transaction](https://github.com/litecoin-project/litecore-lib/blob/master/docs/examples.md#create-an-op-return-transaction)
-* [Create a 2-of-3 multisig P2SH address](https://github.com/litecoin-project/litecore-lib/blob/master/docs/examples.md#create-a-2-of-3-multisig-p2sh-address)
-* [Spend from a 2-of-2 multisig P2SH address](https://github.com/litecoin-project/litecore-lib/blob/master/docs/examples.md#spend-from-a-2-of-2-multisig-p2sh-address)
+* [Generate a random address](https://github.com/omotenashicoin-project/litecore-lib/blob/master/docs/examples.md#generate-a-random-address)
+* [Generate a address from a SHA256 hash](https://github.com/omotenashicoin-project/litecore-lib/blob/master/docs/examples.md#generate-a-address-from-a-sha256-hash)
+* [Import an address via WIF](https://github.com/omotenashicoin-project/litecore-lib/blob/master/docs/examples.md#import-an-address-via-wif)
+* [Create a Transaction](https://github.com/omotenashicoin-project/litecore-lib/blob/master/docs/examples.md#create-a-transaction)
+* [Sign a Bitcoin message](https://github.com/omotenashicoin-project/litecore-lib/blob/master/docs/examples.md#sign-a-bitcoin-message)
+* [Verify a Bitcoin message](https://github.com/omotenashicoin-project/litecore-lib/blob/master/docs/examples.md#verify-a-bitcoin-message)
+* [Create an OP RETURN transaction](https://github.com/omotenashicoin-project/litecore-lib/blob/master/docs/examples.md#create-an-op-return-transaction)
+* [Create a 2-of-3 multisig P2SH address](https://github.com/omotenashicoin-project/litecore-lib/blob/master/docs/examples.md#create-a-2-of-3-multisig-p2sh-address)
+* [Spend from a 2-of-2 multisig P2SH address](https://github.com/omotenashicoin-project/litecore-lib/blob/master/docs/examples.md#spend-from-a-2-of-2-multisig-p2sh-address)
 
 
 ## Security
@@ -51,7 +51,7 @@ If you find a security issue, please email security@bitpay.com.
 
 ## Contributing
 
-Please send pull requests for bug fixes, code optimization, and ideas for improvement. For more information on how to contribute, please refer to our [CONTRIBUTING](https://github.com/litecoin-project/litecore-lib/blob/master/CONTRIBUTING.md) file.
+Please send pull requests for bug fixes, code optimization, and ideas for improvement. For more information on how to contribute, please refer to our [CONTRIBUTING](https://github.com/omotenashicoin-project/litecore-lib/blob/master/CONTRIBUTING.md) file.
 
 ## Building the Browser Bundle
 
@@ -75,7 +75,7 @@ To verify signatures, use the following PGP keys:
 ## Development & Tests
 
 ```sh
-git clone https://github.com/litecoin-project/litecore-lib
+git clone https://github.com/omotenashicoin-project/litecore-lib
 cd litecore-lib
 npm install
 ```
@@ -91,7 +91,9 @@ or create a test coverage report (you can open `coverage/lcov-report/index.html`
 
 ## License
 
-Code released under [the MIT license](https://github.com/litecoin-project/litecore-lib/blob/master/LICENSE).
+Code released under [the MIT license](https://github.com/omotenashicoin-project/litecore-lib/blob/master/LICENSE).
 
 Copyright 2013-2015 BitPay, Inc. Bitcore is a trademark maintained by BitPay, Inc.
 Copyright 2016 The Litecoin Core Developers
+Copyright      The Omotenashicoin Core Developers
+
