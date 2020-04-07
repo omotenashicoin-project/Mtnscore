@@ -19,7 +19,7 @@ describe('Address', function() {
 
   var pubkeyhash = Buffer.from('3c3fa3d4adcaf8f52d5b1843975e122548269937', 'hex');
   var buf = Buffer.concat([Buffer.from([0]), pubkeyhash]);
-  var str = '16VZnHwRhwrExfeHFHGjwrgEMq8VcYPs9r';
+  var str = 'SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L';
 
   it('can\'t build without data', function() {
     (function() {
@@ -345,7 +345,7 @@ describe('Address', function() {
     it('should make this address from a compressed pubkey', function() {
       var pubkey = new PublicKey('0285e9737a74c30a873f74df05124f2aa6f53042c2fc0a130d6cbd7d16b944b004');
       var address = Address.fromPublicKey(pubkey, 'livenet');
-      address.toString().should.equal('19gH5uhqY6DKrtkU66PsZPUZdzTd11Y7ke');
+      address.toString().should.equal('SVyH7kUzGTQXPCXvdXNx7Hd8Hmh3pGk8Dh');
     });
 
     it('should use the default network for pubkey', function() {
@@ -358,9 +358,9 @@ describe('Address', function() {
       var pubkey = new PublicKey('0485e9737a74c30a873f74df05124f2aa6f53042c2fc0a130d6cbd7d16b944b00' +
         '4833fef26c8be4c4823754869ff4e46755b85d851077771c220e2610496a29d98');
       var a = Address.fromPublicKey(pubkey, 'livenet');
-      a.toString().should.equal('16JXnhxjJUhxfyx4y6H4sFcxrgt8kQ8ewX');
+      a.toString().should.equal('SSbXpYjt2quACHjXWXG9R9mXWU7ZYRqWdG');
       var b = new Address(pubkey, 'livenet', 'pubkeyhash');
-      b.toString().should.equal('16JXnhxjJUhxfyx4y6H4sFcxrgt8kQ8ewX');
+      b.toString().should.equal('SSbXpYjt2quACHjXWXG9R9mXWU7ZYRqWdG');
     });
 
     it('should classify from a custom network', function() {
@@ -395,17 +395,17 @@ describe('Address', function() {
           '0xc8e11b0eb0d2ad5362d894f048908341fa61b6e1 OP_EQUALVERIFY OP_CHECKSIG');
         var buf = s.toBuffer();
         var a = Address.fromScript(s, 'livenet');
-        a.toString().should.equal('1KK9oz4bFH8c1t6LmighHaoSEGx3P3FEmc');
+        a.toString().should.equal('Sfc9qpqjyeKoYBsoK9fmqUwzt4BU5zbvde');
         var b = new Address(s, 'livenet');
-        b.toString().should.equal('1KK9oz4bFH8c1t6LmighHaoSEGx3P3FEmc');
+        b.toString().should.equal('Sfc9qpqjyeKoYBsoK9fmqUwzt4BU5zbvde');
       });
 
       it('should make this address from a p2sh input script', function() {
         var s = Script.fromString('OP_HASH160 20 0xa6ed4af315271e657ee307828f54a4365fa5d20f OP_EQUAL');
         var a = Address.fromScript(s, 'livenet');
-        a.toString().should.equal('3GueMn6ruWVfQTN4XKBGEbCbGLwRSUhfnS');
+        a.toString().should.equal('8WJVAByc8rX436BBqmWQYDjpSuHgdhWj2w');
         var b = new Address(s, 'livenet');
-        b.toString().should.equal('3GueMn6ruWVfQTN4XKBGEbCbGLwRSUhfnS');
+        b.toString().should.equal('8WJVAByc8rX436BBqmWQYDjpSuHgdhWj2w');
       });
 
       it('returns the same address if the script is a pay to public key hash out', function() {
@@ -548,19 +548,19 @@ describe('Address', function() {
 
     it('can create an address from a set of public keys', function() {
       var address = Address.createMultisig(publics, 2, Networks.livenet);
-      address.toString().should.equal('3FtqPRirhPvrf7mVUSkygyZ5UuoAYrTW3y');
+      address.toString().should.equal('8VHgBqbbvjxFHkacnu67zc6JfU9RnHKJN6');
       address = new Address(publics, 2, Networks.livenet);
-      address.toString().should.equal('3FtqPRirhPvrf7mVUSkygyZ5UuoAYrTW3y');
+      address.toString().should.equal('8VHgBqbbvjxFHkacnu67zc6JfU9RnHKJN6');
     });
 
     it('works on testnet also', function() {
       var address = Address.createMultisig(publics, 2, Networks.testnet);
-      address.toString().should.equal('2N7T3TAetJrSCruQ39aNrJvYLhG1LJosujf');
+      address.toString().should.equal('8VHgBqbbvjxFHkacnu67zc6JfU9RnHKJN6');
     });
 
     it('can create an address from a set of public keys with a nested witness program', function() {
       var address = Address.createMultisig(publics, 2, Networks.livenet, true);
-      address.toString().should.equal('3PpK1bBqUmPK3Q6QPSUK7BQSZ1DMWL6aes');
+      address.toString().should.equal('8dD9p14ai7Qhg2uXhtoTQowfjZZcnqaJtg');
     });
 
     it('can also be created by Address.createMultisig', function() {

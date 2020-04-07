@@ -236,7 +236,8 @@ BlockHeader.prototype.getDifficulty = function getDifficulty() {
  */
 BlockHeader.prototype._getHash = function hash() {
   var buf = this.toBuffer();
-  return Hash.sha256sha256(buf);
+  //return Hash.sha256sha256(buf);
+  return Hash.skein(buf); //kaniTODO
 };
 
 var idProperty = {

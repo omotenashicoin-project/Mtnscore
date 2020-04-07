@@ -1,5 +1,6 @@
 'use strict';
 
+var skeinhash = require('mtns-skein-hash-js');
 var crypto = require('crypto');
 var BufferUtil = require('../util/buffer');
 var $ = require('../util/preconditions');
@@ -23,6 +24,12 @@ Hash.sha256.blocksize = 512;
 Hash.sha256sha256 = function(buf) {
   $.checkArgument(BufferUtil.isBuffer(buf));
   return Hash.sha256(Hash.sha256(buf));
+};
+
+Hash.skein = function(buf) {
+  $.checkArgument(BufferUtil.isBuffer(buf));
+  return Hash.sha256(skeinhash.digest(buf, 1, 1));
+
 };
 
 Hash.ripemd160 = function(buf) {
