@@ -31,8 +31,6 @@ Hash.skein = function(buf) {
   return Hash.sha256(skeinhash.digest(buf, 1, 1));
 };
 
-
->>>>>>> 0f7a59a3ba6e94073c72e61243a17f7b93e18a55
 Hash.ripemd160 = function(buf) {
   $.checkArgument(BufferUtil.isBuffer(buf));
   return crypto.createHash('ripemd160').update(buf).digest();
