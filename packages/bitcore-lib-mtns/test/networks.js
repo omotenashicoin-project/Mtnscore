@@ -15,25 +15,24 @@ describe('Networks', function() {
     should.exist(networks.defaultNetwork);
   });
 
-  it('will enable/disable regtest Network', function() {
+  it('#DEPRECATED will enable/disable regtest Network', function() {
+    const beforeEnable = networks.testnet;
     networks.enableRegtest();
-    networks.testnet.networkMagic.should.deep.equal(new Buffer('fabfb5da', 'hex'));
-    networks.testnet.port.should.equal(19444);
-    networks.testnet.dnsSeeds.should.deep.equal([]);
-    networks.testnet.regtestEnabled.should.equal(true);
+    /*
+     *networks.testnet.networkMagic.should.deep.equal(new Buffer('fabfb5da', 'hex'));
+     *networks.testnet.port.should.equal(18444);
+     *networks.testnet.dnsSeeds.should.deep.equal([]);
+     *networks.testnet.regtestEnabled.should.equal(true);
+     */
+    networks.testnet.should.deep.equal(beforeEnable);
 
     networks.disableRegtest();
-    networks.testnet.networkMagic.should.deep.equal(new Buffer('fdd2c8f1', 'hex'));
-    networks.testnet.port.should.equal(19335);
-    networks.testnet.dnsSeeds.should.deep.equal([
-      'testnet-seed.omotenashicointools.com',
-      'seed-b.omotenashicoin.loshan.co.uk'
-    ]);
+    networks.testnet.should.deep.equal(beforeEnable);
   });
 
   it('will get network based on string "regtest" value', function() {
     var network = networks.get('regtest');
-    network.should.equal(networks.testnet);
+    network.should.equal(networks.regtest);
   });
 
   it('should be able to define a custom Network', function() {
@@ -58,7 +57,7 @@ describe('Networks', function() {
       if (key !== 'networkMagic') {
         customnet[key].should.equal(custom[key]);
       } else {
-        var expected = new Buffer('e7beb4d4', 'hex');
+        var expected = Buffer.from('e7beb4d4', 'hex');
         customnet[key].should.deep.equal(expected);
       }
     }
@@ -87,7 +86,10 @@ describe('Networks', function() {
     networks.add(custom);
     var network = networks.get(undefined);
     should.not.exist(network);
-    networks.remove(custom);
+    var somenet = networks.get('somenet');
+    should.exist(somenet);
+    somenet.name.should.equal('somenet');
+    networks.remove(somenet);
   });
 
   var constants = ['name', 'alias', 'pubkeyhash', 'scripthash', 'xpubkey', 'xprivkey'];
@@ -106,7 +108,7 @@ describe('Networks', function() {
 
   it('can test for multiple keys', function() {
     expect(networks.get(0x6f, ['pubkeyhash', 'scripthash'])).to.equal(networks.testnet);
-    expect(networks.get(0x3a, ['pubkeyhash', 'scripthash'])).to.equal(networks.testnet);
+    expect(networks.get(0xc4, ['pubkeyhash', 'scripthash'])).to.equal(networks.testnet);
     expect(networks.get(0x6f, ['privatekey', 'port'])).to.equal(undefined);
   });
 

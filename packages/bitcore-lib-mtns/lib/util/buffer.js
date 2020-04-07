@@ -154,19 +154,6 @@ module.exports = {
   reverse: function reverse(param) {
     return (Buffer.from(param)).reverse();
   },
-
-  /**
-   * Transforms an hexa encoded string into a Buffer with binary values
-   *
-   * Shorthand for <tt>Buffer(string, 'hex')</tt>
-   *
-   * @param {string} string
-   * @return {Buffer}
-   */
-  hexToBuffer: function hexToBuffer(string) {
-    assert(js.isHexa(string));
-    return new buffer.Buffer(string, 'hex');
-  }
 };
 
 module.exports.NULL_HASH = module.exports.fill(Buffer.alloc(32), 0);

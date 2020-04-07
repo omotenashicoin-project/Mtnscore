@@ -8,7 +8,7 @@ var networkMaps = {};
 
 /**
  * A network is merely a map containing values that correspond to version
- * numbers for each omotenashicoin network. Currently only supporting "livenet"
+ * numbers for each bitcoin network. Currently only supporting "livenet"
  * (a.k.a. "mainnet") and "testnet".
  * @constructor
  */
@@ -44,7 +44,11 @@ function get(arg, keys) {
     }
     return undefined;
   }
-  return networkMaps[arg];
+  if(networkMaps[arg] && networkMaps[arg].length >= 1) {
+    return networkMaps[arg][0];
+  } else {
+    return networkMaps[arg];
+  }
 }
 
 /**
@@ -57,6 +61,7 @@ function get(arg, keys) {
  * @param {Number} data.pubkeyhash - The publickey hash prefix
  * @param {Number} data.privatekey - The privatekey prefix
  * @param {Number} data.scripthash - The scripthash prefix
+ * @param {string} data.bech32prefix - The native segwit prefix
  * @param {Number} data.xpubkey - The extended public key magic
  * @param {Number} data.xprivkey - The extended private key magic
  * @param {Number} data.networkMagic - The network magic number
@@ -74,6 +79,7 @@ function addNetwork(data) {
     pubkeyhash: data.pubkeyhash,
     privatekey: data.privatekey,
     scripthash: data.scripthash,
+    bech32prefix: data.bech32prefix,
     xpubkey: data.xpubkey,
     xprivkey: data.xprivkey
   });
@@ -97,7 +103,10 @@ function addNetwork(data) {
   }
   _.each(network, function(value) {
     if (!_.isUndefined(value) && !_.isObject(value)) {
-      networkMaps[value] = network;
+      if(!networkMaps[value]) {
+        networkMaps[value] = [];
+      }
+      networkMaps[value].push(network);
     }
   });
 
@@ -120,8 +129,9 @@ function removeNetwork(network) {
     }
   }
   for (var key in networkMaps) {
-    if (networkMaps[key] === network) {
-      delete networkMaps[key];
+    const index = networkMaps[key].indexOf(network);
+    if (index >= 0) {
+      delete networkMaps[key][index];
     }
   }
 }
@@ -132,13 +142,14 @@ addNetwork({
   pubkeyhash: 0x3f,
   privatekey: 0xbf,
   scripthash: 0x12,
+  bech32prefix: '',
   xpubkey: 0x03a39555,
   xprivkey: 0x03a395da,
   networkMagic: 0xd1b5a5dd,
-  port: 12181,
+  port: 12181,/*8333*/
   dnsSeeds: [
-    '66.42.57.23',
-    '198.13.59.12'
+    'seed1.hashseeds.net',
+    'seed2.seedhash.net'
   ]
 });
 
@@ -150,12 +161,19 @@ var livenet = get('livenet');
 
 addNetwork({
   name: 'testnet',
-  alias: 'regtest',
+  alias: 'test',
   pubkeyhash: 0x53,
   privatekey: 0xc1,
   scripthash: 0x12,
+  bech32prefix: '',
   xpubkey: 0x04346b01,
   xprivkey: 0x04346b86,
+  networkMagic: 0x63436454,
+  port: 12281,/* 18333,*/
+  dnsSeeds: [
+    '66.42.57.23',
+    '198.13.59.12'
+  ]
 });
 
 /**
@@ -164,74 +182,29 @@ addNetwork({
  */
 var testnet = get('testnet');
 
-// Add configurable values for testnet/regtest
-
-var TESTNET = {
-  PORT: 12281, 
-  NETWORK_MAGIC: BufferUtil.integerAsBuffer(0x63436454),
-  DNS_SEEDS: [
-    '66.42.57.23',
-    '198.13.59.12',
-    '207.148.98.162'
-  ]
-};
-
-for (var key in TESTNET) {
-  if (!_.isObject(TESTNET[key])) {
-    networkMaps[TESTNET[key]] = testnet;
-  }
-}
-
-var REGTEST = {
-  PORT: 13374,
-  NETWORK_MAGIC: BufferUtil.integerAsBuffer(0x13539464),
-  DNS_SEEDS: []
-};
-
-for (var key in REGTEST) {
-  if (!_.isObject(REGTEST[key])) {
-    networkMaps[REGTEST[key]] = testnet;
-  }
-}
-
-Object.defineProperty(testnet, 'port', {
-  enumerable: true,
-  configurable: false,
-  get: function() {
-    if (this.regtestEnabled) {
-      return REGTEST.PORT;
-    } else {
-      return TESTNET.PORT;
-    }
-  }
-});
-
-Object.defineProperty(testnet, 'networkMagic', {
-  enumerable: true,
-  configurable: false,
-  get: function() {
-    if (this.regtestEnabled) {
-      return REGTEST.NETWORK_MAGIC;
-    } else {
-      return TESTNET.NETWORK_MAGIC;
-    }
-  }
-});
-
-Object.defineProperty(testnet, 'dnsSeeds', {
-  enumerable: true,
-  configurable: false,
-  get: function() {
-    if (this.regtestEnabled) {
-      return REGTEST.DNS_SEEDS;
-    } else {
-      return TESTNET.DNS_SEEDS;
-    }
-  }
+addNetwork({
+  name: 'regtest',
+  alias: 'dev',
+  pubkeyhash: 0x53,
+  privatekey: 0xc1,
+  scripthash: 0x12,
+  bech32prefix: '',
+  xpubkey: 0x04346b01,
+  xprivkey: 0x04346b86,
+  networkMagic: 0x13539464,
+  port: 13374, /*18444,*/
+  dnsSeeds: []
 });
 
 /**
+ * @instance
+ * @member Networks#testnet
+ */
+var regtest = get('regtest');
+
+/**
  * @function
+ * @deprecated
  * @member Networks#enableRegtest
  * Will enable regtest features for testnet
  */
@@ -241,6 +214,7 @@ function enableRegtest() {
 
 /**
  * @function
+ * @deprecated
  * @member Networks#disableRegtest
  * Will disable regtest features for testnet
  */
@@ -258,6 +232,7 @@ module.exports = {
   livenet: livenet,
   mainnet: livenet,
   testnet: testnet,
+  regtest: regtest,
   get: get,
   enableRegtest: enableRegtest,
   disableRegtest: disableRegtest

@@ -16,24 +16,24 @@ describe('URI', function() {
 
     URI.parse.bind(URI, 'badURI').should.throw(TypeError);
 
-    uri = URI.parse('omotenashicoin:');
-    expect(uri.address).to.be.undefined;
-    expect(uri.amount).to.be.undefined;
-    expect(uri.otherParam).to.be.undefined;
+    uri = URI.parse('bitcoin:');
+    expect(uri.address).to.be.equal(undefined);
+    expect(uri.amount).to.be.equal(undefined);
+    expect(uri.otherParam).to.be.equal(undefined);
 
-    uri = URI.parse('omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L');
-    uri.address.should.equal('SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L');
-    expect(uri.amount).to.be.undefined;
-    expect(uri.otherParam).to.be.undefined;
+    uri = URI.parse('bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj');
+    uri.address.should.equal('1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj');
+    expect(uri.amount).to.be.equal(undefined);
+    expect(uri.otherParam).to.be.equal(undefined);
 
-    uri = URI.parse('omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L?amount=123.22');
-    uri.address.should.equal('SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L');
+    uri = URI.parse('bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj?amount=123.22');
+    uri.address.should.equal('1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj');
     uri.amount.should.equal('123.22');
-    expect(uri.otherParam).to.be.undefined;
+    expect(uri.otherParam).to.be.equal(undefined);
 
-    uri = URI.parse('omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L?amount=123.22' +
+    uri = URI.parse('bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj?amount=123.22' +
                     '&other-param=something&req-extra=param');
-    uri.address.should.equal('SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L');
+    uri.address.should.equal('1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj');
     uri.amount.should.equal('123.22');
     uri['other-param'].should.equal('something');
     uri['req-extra'].should.equal('param');
@@ -41,24 +41,24 @@ describe('URI', function() {
 
   // TODO: Split this and explain tests
   it('URIs can be validated statically (test vector)', function() {
-    URI.isValid('omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L').should.equal(true);
-    URI.isValid('omotenashicoin:mkYY5NRvikVBY1EPtaq9fAFgquesdjqECw').should.equal(true);
+    URI.isValid('bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj').should.equal(true);
+    URI.isValid('bitcoin:mkYY5NRvikVBY1EPtaq9fAFgquesdjqECw').should.equal(true);
 
-    URI.isValid('omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L?amount=1.2')
+    URI.isValid('bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj?amount=1.2')
                 .should.equal(true);
-    URI.isValid('omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L?amount=1.2&other=param')
+    URI.isValid('bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj?amount=1.2&other=param')
                 .should.equal(true);
-    URI.isValid('omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L?amount=1.2&req-other=param',
+    URI.isValid('bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj?amount=1.2&req-other=param',
                 ['req-other']).should.equal(true);
-    URI.isValid('omotenashicoin:mmrqEBJxUCf42vdb3oozZtyz5mKr3Vb2Em?amount=0.1&' +
+    URI.isValid('bitcoin:mmrqEBJxUCf42vdb3oozZtyz5mKr3Vb2Em?amount=0.1&' +
                 'r=https%3A%2F%2Ftest.bitpay.com%2Fi%2F6DKgf8cnJC388irbXk5hHu').should.equal(true);
 
-    URI.isValid('omotenashicoin:').should.equal(false);
-    URI.isValid('omotenashicoin:badUri').should.equal(false);
-    URI.isValid('omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L?amount=bad').should.equal(false);
-    URI.isValid('omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L?amount=1.2&req-other=param')
+    URI.isValid('bitcoin:').should.equal(false);
+    URI.isValid('bitcoin:badUri').should.equal(false);
+    URI.isValid('bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfk?amount=bad').should.equal(false);
+    URI.isValid('bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfk?amount=1.2&req-other=param')
                 .should.equal(false);
-    URI.isValid('omotenashicoin:?r=https%3A%2F%2Ftest.bitpay.com%2Fi%2F6DKgf8cnJC388irbXk5hHu')
+    URI.isValid('bitcoin:?r=https%3A%2F%2Ftest.bitpay.com%2Fi%2F6DKgf8cnJC388irbXk5hHu')
                 .should.equal(false);
   });
 
@@ -69,48 +69,48 @@ describe('URI', function() {
   });
 
   it('do not need new keyword', function() {
-    var uri = URI('omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L');
+    var uri = URI('bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj');
     uri.should.be.instanceof(URI);
   });
 
-  describe('instantiation from omotenashicoin uri', function() {
+  describe('instantiation from bitcoin uri', function() {
     /* jshint maxstatements: 25 */
     var uri;
 
     it('parses address', function() {
-      uri = new URI('omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L');
+      uri = new URI('bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj');
       uri.address.should.be.instanceof(bitcore.Address);
       uri.network.should.equal(Networks.livenet);
     });
 
     it('parses amount', function() {
-      uri = URI.fromString('omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L?amount=123.22');
-      uri.address.toString().should.equal('SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L');
+      uri = URI.fromString('bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj?amount=123.22');
+      uri.address.toString().should.equal('1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj');
       uri.amount.should.equal(12322000000);
-      expect(uri.otherParam).to.be.undefined;
+      expect(uri.otherParam).to.be.equal(undefined);
     });
 
     it('parses a testnet address', function() {
-      uri = new URI('omotenashicoin:mkYY5NRvikVBY1EPtaq9fAFgquesdjqECw');
+      uri = new URI('bitcoin:mkYY5NRvikVBY1EPtaq9fAFgquesdjqECw');
       uri.address.should.be.instanceof(bitcore.Address);
       uri.network.should.equal(Networks.testnet);
     });
 
     it('stores unknown parameters as "extras"', function() {
-      uri = new URI('omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L?amount=1.2&other=param');
+      uri = new URI('bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj?amount=1.2&other=param');
       uri.address.should.be.instanceof(bitcore.Address);
-      expect(uri.other).to.be.undefined;
+      expect(uri.other).to.be.equal(undefined);
       uri.extras.other.should.equal('param');
     });
 
     it('throws error when a required feature is not supported', function() {
       (function() {
-        return new URI('omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L?amount=1.2&other=param&req-required=param');
+        return new URI('bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj?amount=1.2&other=param&req-required=param');
       }).should.throw(Error);
     });
 
     it('has no false negative when checking supported features', function() {
-      uri = new URI('omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L?amount=1.2&other=param&' +
+      uri = new URI('bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj?amount=1.2&other=param&' +
                     'req-required=param', ['req-required']);
       uri.address.should.be.instanceof(bitcore.Address);
       uri.amount.should.equal(120000000);
@@ -125,7 +125,7 @@ describe('URI', function() {
     var uri;
 
     uri = new URI({
-      address: 'SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L'
+      address: '1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj'
     });
     uri.address.should.be.instanceof(bitcore.Address);
     uri.network.should.equal(Networks.livenet);
@@ -137,24 +137,24 @@ describe('URI', function() {
     uri.network.should.equal(Networks.testnet);
 
     uri = new URI({
-      address: 'SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L',
+      address: '1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj',
       amount: 120000000,
       other: 'param'
     });
     uri.address.should.be.instanceof(bitcore.Address);
     uri.amount.should.equal(120000000);
-    expect(uri.other).to.be.undefined;
+    expect(uri.other).to.be.equal(undefined);
     uri.extras.other.should.equal('param');
 
     (function() {
       return new URI({
-        address: 'SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L',
+        address: '1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj',
         'req-required': 'param'
       });
     }).should.throw(Error);
 
     uri = new URI({
-      address: 'SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L',
+      address: '1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj',
       amount: 120000000,
       other: 'param',
       'req-required': 'param'
@@ -166,19 +166,19 @@ describe('URI', function() {
   });
 
   it('should support double slash scheme', function() {
-    var uri = new URI('omotenashicoin://SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L');
-    uri.address.toString().should.equal('SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L');
+    var uri = new URI('bitcoin://1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj');
+    uri.address.toString().should.equal('1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj');
   });
 
   it('should input/output String', function() {
-    var str = 'omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L?' +
+    var str = 'bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj?' +
               'message=Donation%20for%20project%20xyz&label=myLabel&other=xD';
     URI.fromString(str).toString().should.equal(str);
   });
 
   it('should input/output JSON', function() {
     var json = JSON.stringify({
-      address: 'SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L',
+      address: '1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj',
       message: 'Donation for project xyz',
       label: 'myLabel',
       other: 'xD'
@@ -187,12 +187,12 @@ describe('URI', function() {
   });
 
   it('should support numeric amounts', function() {
-    var uri = new URI('omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L?amount=12.10001');
+    var uri = new URI('bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj?amount=12.10001');
     expect(uri.amount).to.be.equal(1210001000);
   });
 
   it('should support extra arguments', function() {
-    var uri = new URI('omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L?' +
+    var uri = new URI('bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj?' +
                       'message=Donation%20for%20project%20xyz&label=myLabel&other=xD');
 
     should.exist(uri.message);
@@ -207,38 +207,38 @@ describe('URI', function() {
 
   it('should generate a valid URI', function() {
     new URI({
-      address: 'SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L',
+      address: '1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj',
     }).toString().should.equal(
-      'omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L'
+      'bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj'
     );
 
     new URI({
-      address: 'SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L',
+      address: '1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj',
       amount: 110001000,
       message: 'Hello World',
       something: 'else'
     }).toString().should.equal(
-      'omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L?amount=1.10001&message=Hello%20World&something=else'
+      'bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj?amount=1.10001&message=Hello%20World&something=else'
     );
 
   });
 
   it('should be case insensitive to protocol', function() {
-    var uri1 = new URI('oMoTeNashicoIn:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L');
-    var uri2 = new URI('omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L');
+    var uri1 = new URI('bItcOin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj');
+    var uri2 = new URI('bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj');
 
     uri1.address.toString().should.equal(uri2.address.toString());
   });
 
   it('writes correctly the "r" parameter on string serialization', function() {
-    var originalString = 'omotenashicoin:mmrqEBJxUCf42vdb3oozZtyz5mKr3Vb2Em?amount=0.1&' +
+    var originalString = 'bitcoin:mmrqEBJxUCf42vdb3oozZtyz5mKr3Vb2Em?amount=0.1&' +
                          'r=https%3A%2F%2Ftest.bitpay.com%2Fi%2F6DKgf8cnJC388irbXk5hHu';
     var uri = new URI(originalString);
     uri.toString().should.equal(originalString);
   });
 
   it('displays nicely on the console (#inspect)', function() {
-    var uri = 'omotenashicoin:SavTHrzerKL4TUBqaDQxJYmHFURKJ7Zj9L';
+    var uri = 'bitcoin:1DP69gMMvSuYhbnxsi4EJEFufUAbDrEQfj';
     var instance = new URI(uri);
     instance.inspect().should.equal('<URI: ' + uri + '>');
   });

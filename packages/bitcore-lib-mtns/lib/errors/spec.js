@@ -1,6 +1,6 @@
 'use strict';
 
-var docsURL = 'http://litecore.io/';
+var docsURL = 'http://bitcore.io/';
 
 module.exports = [{
   name: 'InvalidB58Char',
@@ -43,6 +43,13 @@ module.exports = [{
   }, {
     'name': 'InvalidRate',
     'message': 'Invalid exchange rate: {0}'
+  }]
+}, {
+  name: 'MerkleBlock',
+  message: 'Internal Error on MerkleBlock {0}',
+  errors: [{
+    'name': 'InvalidMerkleTree',
+    'message': 'This MerkleBlock contain an invalid Merkle Tree'
   }]
 }, {
   name: 'Transaction',

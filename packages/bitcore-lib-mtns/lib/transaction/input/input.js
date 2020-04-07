@@ -54,10 +54,11 @@ Input.fromObject = function(obj) {
 Input.prototype._fromObject = function(params) {
   var prevTxId;
   if (_.isString(params.prevTxId) && JSUtil.isHexa(params.prevTxId)) {
-    prevTxId = new buffer.Buffer(params.prevTxId, 'hex');
+    prevTxId = Buffer.from(params.prevTxId, 'hex');
   } else {
     prevTxId = params.prevTxId;
   }
+  this.witnesses = [];
   this.output = params.output ?
     (params.output instanceof Output ? params.output : new Output(params.output)) : undefined;
   this.prevTxId = prevTxId || params.txidbuf;
@@ -120,7 +121,7 @@ Input.prototype.setScript = function(script) {
     this._scriptBuffer = script.toBuffer();
   } else if (JSUtil.isHexa(script)) {
     // hex string script
-    this._scriptBuffer = new buffer.Buffer(script, 'hex');
+    this._scriptBuffer = Buffer.from(script, 'hex');
   } else if (_.isString(script)) {
     // human readable string script
     this._script = new Script(script);
@@ -128,7 +129,7 @@ Input.prototype.setScript = function(script) {
     this._scriptBuffer = this._script.toBuffer();
   } else if (BufferUtil.isBuffer(script)) {
     // buffer script
-    this._scriptBuffer = new buffer.Buffer(script);
+    this._scriptBuffer = Buffer.from(script);
   } else {
     throw new TypeError('Invalid argument type: script');
   }
@@ -153,6 +154,13 @@ Input.prototype.getSignatures = function() {
   );
 };
 
+Input.prototype.getSatoshisBuffer = function() {
+  $.checkState(this.output instanceof Output);
+  $.checkState(this.output._satoshisBN);
+  return new BufferWriter().writeUInt64LEBN(this.output._satoshisBN).toBuffer();
+};
+
+
 Input.prototype.isFullySigned = function() {
   throw new errors.AbstractMethodInvoked('Input#isFullySigned');
 };
@@ -167,6 +175,21 @@ Input.prototype.addSignature = function() {
 
 Input.prototype.clearSignatures = function() {
   throw new errors.AbstractMethodInvoked('Input#clearSignatures');
+};
+
+Input.prototype.hasWitnesses = function() {
+  if (this.witnesses && this.witnesses.length > 0) {
+    return true;
+  }
+  return false;
+};
+
+Input.prototype.getWitnesses = function() {
+  return this.witnesses;
+};
+
+Input.prototype.setWitnesses = function(witnesses) {
+  this.witnesses = witnesses;
 };
 
 Input.prototype.isValidSignature = function(transaction, signature) {

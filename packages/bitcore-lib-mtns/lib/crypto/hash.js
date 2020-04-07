@@ -33,6 +33,7 @@ Hash.skein = function(buf) {
   
 };
 
+
 Hash.ripemd160 = function(buf) {
   $.checkArgument(BufferUtil.isBuffer(buf));
   return crypto.createHash('ripemd160').update(buf).digest();
