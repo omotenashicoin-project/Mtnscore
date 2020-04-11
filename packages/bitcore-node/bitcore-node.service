@@ -3,9 +3,10 @@ Description=Bitcore Node
 After=network.target
 
 [Service]
-User=bitcore
-Group=bitcore
-ExecStart=/usr/bin/node /home/bitcore/bitcore/packages/bitcore-node/server.js
+User=ubuntu
+Group=ubuntu
+ExecStart=/usr/bin/node /home/ubuntu/coins/Mtnscore/packages/bitcore-node/build/src/server.js
+WorkingDirectory=/home/ubuntu/coins/be
 
 [Install]
 WantedBy=multi-user.target
